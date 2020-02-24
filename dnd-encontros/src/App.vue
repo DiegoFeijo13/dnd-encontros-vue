@@ -46,7 +46,7 @@
 
 <script>
 //import HelloWorld from './components/HelloWorld';
-import Players from './components/Players.vue';
+import Players from './components/players/Players';
 
 export default {
   name: 'App',
