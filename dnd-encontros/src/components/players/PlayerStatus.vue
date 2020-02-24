@@ -1,59 +1,15 @@
 <template>
   <div class="playerstatus">
-    <v-tooltip top>
+    <v-tooltip top v-for="s in status" :key="s">
       <template v-slot:activator="{ on }">
-        <v-chip label class="ma-2" v-on="on">
+        <v-chip dense label class="ma-1" v-on="on">
           <v-avatar left>
-            <v-icon>fa-shield-alt</v-icon>
+            <v-icon small>{{s.icon}}</v-icon>
           </v-avatar>
-          {{player.ca}}
+          {{s.value}}
         </v-chip>
       </template>
-      <span>CA</span>
-    </v-tooltip>
-    <v-tooltip top>
-      <template v-slot:activator="{ on }">
-        <v-chip label class="ma-2" v-on="on">
-          <v-avatar left>
-            <v-icon>fa-heart</v-icon>
-          </v-avatar>
-          {{player.pv}}
-        </v-chip>
-      </template>
-      <span>PV</span>
-    </v-tooltip>   
-    <v-tooltip top>
-      <template v-slot:activator="{ on }">
-        <v-chip label class="ma-2" v-on="on">
-          <v-avatar left>
-            <v-icon>fa-eye</v-icon>
-          </v-avatar>
-          {{player.percepcao}}
-        </v-chip>
-      </template>
-      <span>Percepção</span>
-    </v-tooltip>
-    <v-tooltip top>
-      <template v-slot:activator="{ on }">
-        <v-chip label class="ma-2" v-on="on">
-          <v-avatar left>
-            <v-icon>fa-search</v-icon>
-          </v-avatar>
-          {{player.investigacao}}
-        </v-chip>
-      </template>
-      <span>Investigação</span>
-    </v-tooltip>
-    <v-tooltip top>
-      <template v-slot:activator="{ on }">
-        <v-chip label class="ma-2" v-on="on">
-          <v-avatar left>
-            <v-icon>fa-lightbulb</v-icon>
-          </v-avatar>
-          {{player.intuicao}}
-        </v-chip>
-      </template>
-      <span>Intuição</span>
+      <span>s.name</span>
     </v-tooltip>
   </div>
 </template>
@@ -63,12 +19,21 @@
 export default {
   props: {
     player: {}
+  },
+  data() {
+    return { status: [
+      { name: "CA", value: this.player.ca, icon: 'fa-shield-alt'},
+      { name: "PV", value: this.player.pv, icon: 'fa-heart'},
+      { name: "Percepção", value: this.player.percepcao, icon: 'fa-eye'},
+      { name: "Investigação", value: this.player.investigacao, icon: 'fa-search'},
+      { name: "Intuição", value: this.player.intuicao, icon: 'fa-lightbulb'},
+      ] };
   }
 };
 </script>
 
 <style scoped>
-.playerstatus{
-    align-content: flex-end;
+.playerstatus {
+  align-content: flex-end;
 }
 </style>

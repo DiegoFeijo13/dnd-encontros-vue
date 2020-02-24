@@ -48,7 +48,7 @@
 import PlayerStatus from "./PlayerStatus.vue";
 import PlayerConditions from "./PlayerConditions.vue";
 import PlayerForm from "./PlayerForm";
-import ConfirmationDialog from "../ConfirmationDialog";
+import ConfirmationDialog from "../template/ConfirmationDialog";
 
 export default {
   components: {
