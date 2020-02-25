@@ -1,28 +1,12 @@
 <template>
-  <v-card shaped>
-    <v-list-item two-line>
-      <v-list-item-content>
-        <v-list-item-title>{{player.nome}}</v-list-item-title>
-        <v-list-item-subtitle>{{player.classe}} / {{player.raca}}</v-list-item-subtitle>
-      </v-list-item-content>
-      <v-list-item-avatar color="teal">
-        <div style="width:100%; align-content:center;">
-          <span class="white--text headline">{{player.nivel}}</span>
-        </div>
-      </v-list-item-avatar>
-    </v-list-item>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <player-status :player="player" />
-      <player-conditions />
-    </v-card-text>
-
+  <v-card class="my-2" max-width="274">
     <v-card-actions>
+      <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
-          <v-btn color="red" dark x-small v-on="on">Remover</v-btn>
+          <v-btn text icon pink v-on="on">
+            <v-icon>fa-times</v-icon>
+          </v-btn>
         </template>
         <ConfirmationDialog
           :title="'Remover PDJ?'"
@@ -30,31 +14,105 @@
           @confirm="removePlayer"
         />
       </v-dialog>
-
-      <v-spacer></v-spacer>
-
-      <v-dialog v-model="editdialog" width="500">
-        <template v-slot:activator="{ on }">
-          <v-btn color="primary" dark x-small v-on="on">Editar</v-btn>
-        </template>
-        <player-form :title="'Editar PDJ'" :playerToEdit="player" @savePlayer="editPlayer" />
-      </v-dialog>
     </v-card-actions>
+    <v-img
+      height="150"
+      contain
+      src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/lou_devole.jpg"
+    ></v-img>
+
+    <v-card-title>{{player.nome}}</v-card-title>
+    <v-card-subtitle>{{player.raca}} / {{player.classe}}</v-card-subtitle>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <v-row dense>
+        <v-col>
+          <v-text-field
+            v-model="player.nivel"
+            type="number"
+            label="Nível"
+            outlined
+            dense
+            prepend-icon="fa-bolt"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="player.percepcao"
+            type="number"
+            label="PER"
+            outlined
+            dense
+            prepend-icon="fa-eye"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row dense>
+        <v-col>
+          <v-text-field
+            v-model="player.ca"
+            type="number"
+            label="CA"
+            outlined
+            dense
+            prepend-icon="fa-shield-alt"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="player.investigacao"
+            type="number"
+            label="INV"
+            outlined
+            dense
+            prepend-icon="fa-search"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row dense>
+        <v-col>
+          <v-text-field
+            v-model="player.pv"
+            type="number"
+            label="PV"
+            outlined
+            dense
+            prepend-icon="fa-heart"
+          ></v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            v-model="player.intuicao"
+            type="number"
+            label="INT"
+            outlined
+            dense
+            prepend-icon="fa-lightbulb"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    
   </v-card>
 </template>
 
 
 <script>
-import PlayerStatus from "./PlayerStatus.vue";
-import PlayerConditions from "./PlayerConditions.vue";
-import PlayerForm from "./PlayerForm";
+//import PlayerStatus from "./PlayerStatus.vue";
+//import PlayerConditions from "./PlayerConditions.vue";
+//import PlayerForm from "./PlayerForm";
 import ConfirmationDialog from "../template/ConfirmationDialog";
 
 export default {
   components: {
-    PlayerStatus,
-    PlayerConditions,
-    PlayerForm,
+    //PlayerStatus,
+    //PlayerConditions,
+    //PlayerForm,
     ConfirmationDialog
   },
   props: {
@@ -84,10 +142,6 @@ export default {
     };
   },
   methods: {
-    editPlayer(player) {
-      this.editdialog = false;
-      this.$emit("editPlayer", player);
-    },
     removePlayer(value) {
       this.removedialog = false;
       if (value) {

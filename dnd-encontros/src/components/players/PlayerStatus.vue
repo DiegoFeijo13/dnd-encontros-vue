@@ -1,6 +1,6 @@
 <template>
   <div class="playerstatus">
-    <v-tooltip top v-for="s in status" :key="s">
+    <v-tooltip top v-for="s in status" :key="s.name">
       <template v-slot:activator="{ on }">
         <v-chip dense label class="ma-1" v-on="on">
           <v-avatar left>

@@ -1,7 +1,9 @@
 <template>  
     <v-navigation-drawer v-model="drawer" app dark absolute permanent right>
       <v-list dense>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" 
+        link 
+        @click="$emit('nav', item.area)">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -20,9 +22,9 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "PDJs", icon: "mdi-home-city" },
-        { title: "Monstros", icon: "mdi-account" },
-        { title: "Encontro", icon: "mdi-account-group-outline" }
+        { title: "PDJs", icon: "mdi-home-city", area: "Players" },
+        { title: "Monstros", icon: "mdi-account", area: "Monsters" },
+        { title: "Encontro", icon: "mdi-account-group-outline", area:"Encounter" }
       ],
       mini: true
     };

@@ -1,11 +1,18 @@
 <template>
   <v-container fluid>
-  <h1>Personagens dos Jogadores</h1>
-  <v-divider />
-    <AddPlayer @savePlayer="addPlayer" />
+    <v-row>
+      <v-col>
+        <h1>Personagens dos Jogadores</h1>
+      </v-col>
+      <v-col lg="2" align-self="end">        
+        <AddPlayer @savePlayer="addPlayer" />
+      </v-col>
+    </v-row>
+
+    <v-divider />
     <v-row dense>
-      <v-col v-for="(p, n) in players" :key="n" :cols="3">
-        <Player :player="p" @editPlayer="editPlayer" @removePlayer="removePlayer(n)"/>
+      <v-col v-for="(p, n) in players" :key="n">
+        <Player :player="p" @removePlayer="removePlayer(n)" />
       </v-col>
     </v-row>
   </v-container>
@@ -35,9 +42,6 @@ export default {
     addPlayer(player) {
       this.players.push(player);
       this.savePlayers();
-    },
-    editPlayer(){
-      this.savePlayers()
     },
     removePlayer(x) {
       this.players.splice(x, 1);

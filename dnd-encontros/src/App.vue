@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Menu></Menu>
+    <Menu @nav="nav"></Menu>
 
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
@@ -18,10 +18,7 @@
     </v-app-bar>
 
     <v-content>
-      
-        <Players />
-      
-      <!-- <HelloWorld/> -->
+      <component :is="componente"/>      
     </v-content>
 
     <v-footer app>
@@ -31,21 +28,27 @@
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld';
 import Players from "./components/players/Players";
+import Monsters from "./components/monsters/Monsters"
 import Menu from "./components/nav/Menu";
 
 export default {
   name: "App",
 
-  components: {
-    // HelloWorld,
+  components: {    
     Players,
+    Monsters,
     Menu
   },
 
   data: () => ({
-    //
-  })
+    componente: "Players"
+  }),
+
+  methods: {
+    nav(value){      
+      this.componente = value;
+    }
+  }
 };
 </script>
