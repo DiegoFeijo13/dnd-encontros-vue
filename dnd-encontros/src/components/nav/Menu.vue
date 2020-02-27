@@ -24,7 +24,7 @@ export default {
       items: [
         { title: "PDJs", icon: "mdi-home-city", area: "Players" },
         { title: "Monstros", icon: "mdi-account", area: "Monsters" },
-        { title: "Encontro", icon: "mdi-account-group-outline", area:"Encounter" }
+        { title: "Encontro", icon: "mdi-account-group-outline", area:"Encounters" }
       ],
       mini: true
     };

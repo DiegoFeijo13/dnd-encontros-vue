@@ -15,11 +15,7 @@
         />
       </v-dialog>
     </v-card-actions>
-    <v-img
-      height="150"
-      contain
-      src="https://i.pinimg.com/564x/4f/c2/87/4fc287088a5ffe51c2baa2c6bf98e745.jpg"
-    ></v-img>
+    <v-img height="150" contain :src="monster.img"></v-img>
 
     <v-card-title>{{monster.nome}}</v-card-title>
     <v-card-subtitle>{{monster.tipo}} / {{monster.alinhamento}}</v-card-subtitle>
@@ -28,53 +24,26 @@
 
     <v-card-text>
       <v-row dense>
-        <v-col>
-          <v-text-field
-            v-model="monster.dv"
-            type="number"
-            label="Nível"
-            outlined
-            dense
-            prepend-icon="fa-bolt"
-          ></v-text-field>
+        <v-col lg="2">
+          <strong>ND:</strong>
         </v-col>
-        <v-col>
-          <v-text-field
-            v-model="monster.dados"
-            type="number"
-            label="Nr Dados"
-            outlined
-            dense
-            prepend-icon="fa-eye"
-          ></v-text-field>
-        </v-col>
+        <v-col>{{monster.nd}} ({{monster.xp}}xp)</v-col>
       </v-row>
 
       <v-row dense>
-        <v-col>
-          <v-text-field
-            v-model="monster.pvbase"
-            type="number"
-            label="PV Base"
-            outlined
-            dense
-            prepend-icon="fa-shield-alt"
-          ></v-text-field>
+        <v-col lg="2">
+          <strong>PV:</strong>
         </v-col>
-        <v-col>
-          <v-text-field
-            v-model="monster.destreza"
-            type="number"
-            label="Mod Destreza"
-            outlined
-            dense
-            prepend-icon="fa-search"
-          ></v-text-field>
+        <v-col>{{monster.dados}}{{monster.dv}}+{{monster.pvbase}}</v-col>
+      </v-row>
+
+      <v-row dense>
+        <v-col lg="2">
+          <strong>DES:</strong>
         </v-col>
+        <v-col>{{monster.destreza}}</v-col>
       </v-row>
     </v-card-text>
-
-    
   </v-card>
 </template>
 
@@ -91,7 +60,7 @@ export default {
   },
   data() {
     return {
-      removedialog: false,
+      removedialog: false
     };
   },
   methods: {

@@ -28,8 +28,9 @@
 </template>
 
 <script>
-import Players from "./components/players/Players";
+import Players from "./components/players/Players"
 import Monsters from "./components/monsters/Monsters"
+import Encounters from "./components/encounter/Encounters"
 import Menu from "./components/nav/Menu";
 
 export default {
@@ -38,6 +39,7 @@ export default {
   components: {    
     Players,
     Monsters,
+    Encounters,
     Menu
   },
 

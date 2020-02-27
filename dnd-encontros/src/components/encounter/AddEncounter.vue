@@ -2,30 +2,28 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
-        <v-btn color="red lighten-2" dark v-on="on">Novo Monstro</v-btn>
+        <v-btn color="red lighten-2" dark v-on="on">Novo Encontro</v-btn>
       </template>
-      <monster-form 
-      :title="'Novo Monstro'" 
-      @saveMonster="saveMonster"/>
+      <encounter-form @saveEncounter="saveEncounter"/>
       
     </v-dialog>
   </div>
 </template>
 
 <script>
-import MonsterForm from './MonsterForm.vue'
+import EncounterForm from './EncounterForm.vue'
 
 export default {
-  components: {MonsterForm},  
+  components: {EncounterForm},  
   data() {
     return {
       dialog: false,      
     };
   },
   methods: {
-    saveMonster(monster) {      
+    saveEncounter(encounter) {      
       this.dialog = false;     
-      this.$emit('saveMonster',monster) 
+      this.$emit('saveEncounter',encounter) 
     }
   }
 };

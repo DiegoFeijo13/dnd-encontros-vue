@@ -5,52 +5,82 @@
     <v-card-text>
       <v-form v-model="valid">
         <v-container fluid>
-          <v-text-field v-model="monster.nome" label="Nome" outlined dense required></v-text-field>
+          <v-row dense>
+            <v-col>
+              <v-text-field v-model="monster.img" label="Imagem" outlined dense></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row dense>
+            <v-col>
+              <v-text-field v-model="monster.nome" label="Nome" outlined dense required></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field v-model="monster.tipo" label="Tipo" outlined dense required></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="monster.alinhamento"
+                label="Alinhamento"
+                outlined
+                dense
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-          <v-text-field v-model="monster.tipo" label="Tipo" outlined dense required></v-text-field>
+          <v-row dense>            
+            <v-col>
+              <v-text-field
+                v-model="monster.destreza"
+                type="number"
+                label="Mod Des"
+                outlined
+                dense
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field v-model="monster.nd" type="number" label="ND" outlined dense required></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field v-model="monster.xp" type="number" label="XP" outlined dense required></v-text-field>
+            </v-col>
+          </v-row>
 
-          <v-text-field v-model="monster.alinhamento" label="Alinhamento" outlined dense required></v-text-field>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="monster.dados"
+                type="number"
+                label="Nr Dados"
+                outlined
+                dense
+                required
+              ></v-text-field>
+            </v-col>
 
-          <v-text-field
-            v-model="monster.dados"
-            type="number"
-            label="Nr Dados"
-            outlined
-            dense
-            required
-          ></v-text-field>
+            <v-col>
+              <v-select
+                v-model="monster.dv"
+                label="DV"
+                :items="['d2','d4','d6','d8','d10','d12','d20']"
+                outlined
+                dense
+              ></v-select>
+            </v-col>
 
-          <v-text-field
-            v-model="monster.dv"
-            type="number"
-            label="DV"
-            outlined
-            dense
-            required
-            prepend-icon="fa-shield-alt"
-          ></v-text-field>
-
-          <v-text-field
-            v-model="monster.pvbase"
-            type="number"
-            :counter="2"
-            label="PV Base"
-            outlined
-            dense
-            required
-            prepend-icon="fa-heart"
-          ></v-text-field>
-
-          <v-text-field
-            v-model="monster.destreza"
-            type="number"
-            :counter="2"
-            label="Mod Destreza"
-            outlined
-            dense
-            required
-            prepend-icon="fa-eye"
-          ></v-text-field>
+            <v-col>
+              <v-text-field
+                v-model="monster.pvbase"
+                type="number"
+                :counter="2"
+                label="PV Base"
+                outlined
+                dense
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </v-container>
       </v-form>
     </v-card-text>
