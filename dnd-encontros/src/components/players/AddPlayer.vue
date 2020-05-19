@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
-        <v-btn color="red lighten-2" dark v-on="on">Novo PDJ</v-btn>
+        <v-btn color="brown lighten-2" dark v-on="on">Novo PDJ</v-btn>
       </template>
       <player-form 
       :title="'Novo PDJ'" 

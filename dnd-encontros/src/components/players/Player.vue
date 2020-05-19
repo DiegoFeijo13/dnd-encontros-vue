@@ -1,11 +1,90 @@
 <template>
   <v-card class="my-2" max-width="274">
+    <v-list-item>
+      <v-list-item-avatar color="grey">
+        <img
+          src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/lou_devole.jpg"
+        />
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-title class="headline">{{player.nome}}</v-list-item-title>
+        <v-list-item-subtitle>{{player.raca}} / {{player.classe}}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-divider class="mx-4"></v-divider>
+
+    <v-card-text>
+      <v-row dense>
+        <v-col>
+          <v-avatar tile size="36" color="black">
+            <span class="label">LVL</span>
+          </v-avatar>
+          <v-avatar tile size="36" color="#d3d3d3">
+            <span class="value">{{player.nivel}}</span>
+          </v-avatar>
+        </v-col>
+        <v-col>
+          <v-avatar tile size="36" color="black">
+            <span class="label">PER</span>
+          </v-avatar>
+          <v-avatar tile size="36" color="#d3d3d3">
+            <span class="value">{{player.percepcao}}</span>
+          </v-avatar>
+        </v-col>
+      </v-row>
+      <v-row dense>
+        <v-col>
+          <v-avatar tile size="36" color="black">
+            <span class="label">CA</span>
+          </v-avatar>
+          <v-avatar tile size="36" color="#d3d3d3">
+            <span class="value">{{player.ca}}</span>
+          </v-avatar>
+        </v-col>
+        <v-col>
+          <v-avatar tile size="36" color="black">
+            <span class="label">INT</span>
+          </v-avatar>
+          <v-avatar tile size="36" color="#d3d3d3">
+            <span class="value">{{player.intuicao}}</span>
+          </v-avatar>
+        </v-col>
+      </v-row>
+      <v-row dense>
+        <v-col>
+          <v-avatar tile size="36" color="black">
+            <span class="label">PV</span>
+          </v-avatar>
+          <v-avatar tile size="36" color="#d3d3d3">
+            <span class="value">{{player.pv}}</span>
+          </v-avatar>
+        </v-col>
+        <v-col>
+          <v-avatar tile size="36" color="black">
+            <span class="label">INV</span>
+          </v-avatar>
+          <v-avatar tile size="36" color="#d3d3d3">
+            <span class="value">{{player.investigacao}}</span>
+          </v-avatar>
+        </v-col>
+      </v-row>
+    </v-card-text>
+
     <v-card-actions>
+      <v-dialog v-model="editdialog" width="500">
+        <template v-slot:activator="{ on }">
+          <v-btn icon color="blue" v-on="on">
+            <v-icon>fa-edit</v-icon>
+          </v-btn>
+        </template>
+        <PlayerEditDialog :player="player" @confirm="closeEdit" />
+      </v-dialog>
       <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
-          <v-btn text icon pink v-on="on">
-            <v-icon>fa-times</v-icon>
+          <v-btn icon v-on="on">
+            <v-icon>fa-trash</v-icon>
           </v-btn>
         </template>
         <ConfirmationDialog
@@ -15,105 +94,18 @@
         />
       </v-dialog>
     </v-card-actions>
-    <v-img
-      height="150"
-      contain
-      src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/lou_devole.jpg"
-    ></v-img>
-
-    <v-card-title>{{player.nome}}</v-card-title>
-    <v-card-subtitle>{{player.raca}} / {{player.classe}}</v-card-subtitle>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <v-row dense>
-        <v-col>
-          <v-text-field
-            v-model="player.nivel"
-            type="number"
-            label="Nível"
-            outlined
-            dense
-            prepend-icon="fa-bolt"
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="player.percepcao"
-            type="number"
-            label="PER"
-            outlined
-            dense
-            prepend-icon="fa-eye"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-
-      <v-row dense>
-        <v-col>
-          <v-text-field
-            v-model="player.ca"
-            type="number"
-            label="CA"
-            outlined
-            dense
-            prepend-icon="fa-shield-alt"
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="player.investigacao"
-            type="number"
-            label="INV"
-            outlined
-            dense
-            prepend-icon="fa-search"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-
-      <v-row dense>
-        <v-col>
-          <v-text-field
-            v-model="player.pv"
-            type="number"
-            label="PV"
-            outlined
-            dense
-            prepend-icon="fa-heart"
-          ></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field
-            v-model="player.intuicao"
-            type="number"
-            label="INT"
-            outlined
-            dense
-            prepend-icon="fa-lightbulb"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-    </v-card-text>
-
-    
   </v-card>
 </template>
 
 
 <script>
-//import PlayerStatus from "./PlayerStatus.vue";
-//import PlayerConditions from "./PlayerConditions.vue";
-//import PlayerForm from "./PlayerForm";
 import ConfirmationDialog from "../template/ConfirmationDialog";
+import PlayerEditDialog from "./PlayerEditDialog";
 
 export default {
   components: {
-    //PlayerStatus,
-    //PlayerConditions,
-    //PlayerForm,
-    ConfirmationDialog
+    ConfirmationDialog,
+    PlayerEditDialog
   },
   props: {
     player: {}
@@ -142,6 +134,10 @@ export default {
     };
   },
   methods: {
+    closeEdit() {
+      this.editdialog = false;
+      this.$emit("savePlayer", this.player);
+    },
     removePlayer(value) {
       this.removedialog = false;
       if (value) {
@@ -151,3 +147,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.label {
+  text-align: center;
+  color: white;
+}
+
+.value {
+  text-align: center;
+}
+</style>
