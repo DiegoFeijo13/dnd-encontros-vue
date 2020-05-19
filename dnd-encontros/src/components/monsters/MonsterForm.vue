@@ -108,8 +108,7 @@ export default {
   },
   methods: {
     saveMonster() {
-      this.$emit("saveMonster", this.monster);
-      this.monster = {};
+      this.$emit("saveMonster", this.monster);      
     }
   }
 };

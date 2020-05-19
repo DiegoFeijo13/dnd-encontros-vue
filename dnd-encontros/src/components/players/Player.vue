@@ -78,7 +78,7 @@
             <v-icon>fa-edit</v-icon>
           </v-btn>
         </template>
-        <PlayerEditDialog :player="player" @confirm="closeEdit" />
+        <PlayerForm :playerToEdit="player" title="Editar PDJ" @savePlayer="closeEdit" />
       </v-dialog>
       <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
@@ -100,12 +100,12 @@
 
 <script>
 import ConfirmationDialog from "../template/ConfirmationDialog";
-import PlayerEditDialog from "./PlayerEditDialog";
+import PlayerForm from "./PlayerForm";
 
 export default {
   components: {
     ConfirmationDialog,
-    PlayerEditDialog
+    PlayerForm
   },
   props: {
     player: {}

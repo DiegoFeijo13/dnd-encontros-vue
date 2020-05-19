@@ -1,21 +1,24 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col>
-        <h1>Monstros</h1>
-      </v-col>
-      <v-col lg="2" align-self="end">
-        <add-monster @saveMonster="addMonster" />
-      </v-col>
-    </v-row>
+  <div>
+    <v-app-bar app color="primary" dark>
+      <v-row>
+        <v-col>
+          <h1>Monstros</h1>
+        </v-col>
+        <v-col lg="2" align-self="end">
+          <add-monster @saveMonster="addMonster" />
+        </v-col>
+      </v-row>
+    </v-app-bar>
 
-    <v-divider />
-    <v-row dense>
-      <v-col v-for="(m, n) in monsters" :key="n">
-        <monster :monster="m" @removeMonster="removeMonster(n)" />
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-container fluid>
+      <v-row dense>
+        <v-col v-for="(m, n) in monsters" :key="n">
+          <monster :monster="m" @removeMonster="removeMonster(n)" @saveMonster="saveMonsters()" />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>

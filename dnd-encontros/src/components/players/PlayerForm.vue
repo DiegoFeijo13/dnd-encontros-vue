@@ -60,8 +60,7 @@
                 label="CA"
                 outlined
                 dense
-                required
-                prepend-icon="fa-shield-alt"
+                required                
               ></v-text-field>
             </v-col>
 
@@ -74,7 +73,6 @@
                 outlined
                 dense
                 required
-                prepend-icon="fa-heart"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -88,7 +86,6 @@
                 outlined
                 dense
                 required
-                prepend-icon="fa-eye"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="4">
@@ -100,7 +97,6 @@
                 outlined
                 dense
                 required
-                prepend-icon="fa-search"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="4">
@@ -112,7 +108,6 @@
                 outlined
                 dense
                 required
-                prepend-icon="fa-lightbulb"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -143,8 +138,7 @@ export default {
   },
   methods: {
     savePlayer() {
-      this.$emit('savePlayer', this.player)
-      this.player = {}
+      this.$emit('savePlayer', this.player)      
     }
   }
 };

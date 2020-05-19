@@ -2,10 +2,11 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
-        <v-btn color="red lighten-2" dark v-on="on">Novo Monstro</v-btn>
+        <v-btn color="brown lighten-2" dark v-on="on">Novo Monstro</v-btn>
       </template>
       <monster-form 
       :title="'Novo Monstro'" 
+      :monsterToEdit ="{}"
       @saveMonster="saveMonster"/>
       
     </v-dialog>
