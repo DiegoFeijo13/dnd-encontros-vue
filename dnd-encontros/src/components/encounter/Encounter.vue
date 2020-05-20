@@ -1,11 +1,29 @@
 <template>
   <v-card class="my-2" max-width="274">
+    <v-card-title>{{encounter.name}}</v-card-title>
+    <v-card-subtitle>ND {{encounter.nd}} ({{encounter.xp}}xp)</v-card-subtitle>
     <v-card-actions>
+      <v-btn>
+        <v-icon>fa-edit</v-icon>
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn>
+        <v-icon>fa-eye</v-icon>
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-dialog v-model="addEMDialog" width="500">
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>fa-plus</v-icon>
+          </v-btn>
+        </template>
+        <add-encounter-monster @confirm="addEncounterMonster" />
+      </v-dialog>
       <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
-          <v-btn text icon pink v-on="on">
-            <v-icon>fa-times</v-icon>
+          <v-btn icon v-on="on">
+            <v-icon>fa-trash</v-icon>
           </v-btn>
         </template>
         <ConfirmationDialog
@@ -15,50 +33,51 @@
         />
       </v-dialog>
     </v-card-actions>
-
-    <v-card-title>{{encounter.nome}}</v-card-title>
-    <v-card-subtitle>ND {{encounter.nd}} ({{encounter.xp}}xp)</v-card-subtitle>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-text>
-      <v-list dense>
-        <v-subheader>Monstros</v-subheader>
-        <v-list-item v-for="(m, n) in encounter.monsters" :key="n">
-            <v-list-item-content>
-                <v-list-item-title>
-                    {{m.num}}x{{m.monster.nome}}
-                </v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-card-text>
   </v-card>
 </template>
 
 
 <script>
+import AddEncounterMonster from "./AddEncounterMonster";
 import ConfirmationDialog from "../template/ConfirmationDialog";
 
 export default {
   components: {
+    AddEncounterMonster,
     ConfirmationDialog
   },
   props: {
-    encounter: {}
+    encounter: Object
   },
   data() {
     return {
-      removedialog: false
+      removedialog: false,
+      addEMDialog: false
     };
   },
   methods: {
+    calculateXP() {
+      //Determinar limites de xp por personagem
+      
+      let xp = 0;
+      this.encounter.monsters.forEach(m => {
+        xp += parseInt(m.monster.xp);
+      });
+      this.encounter.xp = xp;
+    },
     removeEncounter(value) {
       this.removedialog = false;
       if (value) {
         this.$emit("removeEncounter", this.encounter);
       }
-    }
+    },
+    addEncounterMonster(value) {
+      this.addEMDialog = false;
+      if (value) {
+        this.encounter.monsters.push(value);
+        this.calculateXP();
+      }
+    },    
   }
 };
 </script>

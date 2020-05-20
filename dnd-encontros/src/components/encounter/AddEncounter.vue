@@ -2,9 +2,9 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on }">
-        <v-btn color="red lighten-2" dark v-on="on">Novo Encontro</v-btn>
+        <v-btn color="brown lighten-2" dark v-on="on">Novo Encontro</v-btn>
       </template>
-      <encounter-form @saveEncounter="saveEncounter"/>
+      <encounter-form title="Novo Encontro" @saveEncounter="saveEncounter"/>
       
     </v-dialog>
   </div>

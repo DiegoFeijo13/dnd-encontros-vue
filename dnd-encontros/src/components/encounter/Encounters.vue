@@ -1,21 +1,24 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col>
-        <h1>Encontros</h1>
-      </v-col>
-      <v-col lg="2" align-self="end">
-        <add-encounter @saveEncounter="addEncounter" />
-      </v-col>
-    </v-row>
+  <div>
+    <v-app-bar app color="primary" dark>
+      <v-row>
+        <v-col>
+          <h1>Encontros</h1>
+        </v-col>
+        <v-col lg="2" align-self="end">
+          <add-encounter @saveEncounter="addEncounter" />
+        </v-col>
+      </v-row>
+    </v-app-bar>
 
-    <v-divider />
-    <v-row dense>
-      <v-col v-for="(e, n) in encounters" :key="n">
-        <encounter :encounter="e" @removeEncounter="removeEncounter(n)" />
-      </v-col>
-    </v-row>
-  </v-container>
+    <v-container fluid>
+      <v-row dense>
+        <v-col v-for="(e, n) in encounters" :key="n">
+          <encounter :encounter="e" @removeEncounter="removeEncounter(n)" />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>

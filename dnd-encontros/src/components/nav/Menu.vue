@@ -8,11 +8,13 @@
             class="shrink mr-2"
             contain
             src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/jeporpg-hollow.png"
-            transition="scale-transition"            
+            transition="scale-transition"
           />
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title><h2>Gerenciador</h2></v-list-item-title>
+          <v-list-item-title>
+            <h2>Gerenciador</h2>
+          </v-list-item-title>
           <v-list-item-subtitle>de Encontros</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
