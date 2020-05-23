@@ -72,14 +72,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-dialog v-model="editdialog" width="500">
-        <template v-slot:activator="{ on }">
-          <v-btn icon color="blue" v-on="on">
-            <v-icon>fa-edit</v-icon>
-          </v-btn>
-        </template>
-        <PlayerForm :playerToEdit="player" title="Editar PDJ" @savePlayer="closeEdit" />
-      </v-dialog>
+      <edit-player-dialog :playerToEdit="player" />
       <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
@@ -100,12 +93,12 @@
 
 <script>
 import ConfirmationDialog from "../template/ConfirmationDialog";
-import PlayerForm from "./PlayerForm";
+import EditPlayerDialog from "./EditPlayerDialog";
 
 export default {
   components: {
     ConfirmationDialog,
-    PlayerForm
+    EditPlayerDialog
   },
   props: {
     player: {}
@@ -134,14 +127,10 @@ export default {
     };
   },
   methods: {
-    closeEdit() {
-      this.editdialog = false;
-      this.$emit("savePlayer", this.player);
-    },
     removePlayer(value) {
       this.removedialog = false;
       if (value) {
-        this.$emit("removePlayer", this.player);
+        this.$store.commit("player/removePlayer", this.player);
       }
     }
   }

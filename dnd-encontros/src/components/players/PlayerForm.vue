@@ -1,9 +1,5 @@
 <template>
-  <v-card>
-    <v-card-title class="headline grey lighten-2" primary-title>{{title}}</v-card-title>
-
-    <v-card-text>
-      <v-form v-model="valid">
+  <v-form v-model="valid">
         <v-container>
           <v-row dense>
             <v-col cols="12" md="4">
@@ -113,15 +109,6 @@
           </v-row>
         </v-container>
       </v-form>
-    </v-card-text>
-
-    <v-divider></v-divider>
-
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" text @click="savePlayer()">Salvar</v-btn>
-    </v-card-actions>
-  </v-card>
 </template>
 
 <script>
@@ -135,11 +122,6 @@ export default {
       player: this.playerToEdit,
       valid: false,      
     };
-  },
-  methods: {
-    savePlayer() {
-      this.$emit('savePlayer', this.player)      
-    }
   }
 };
 </script>
