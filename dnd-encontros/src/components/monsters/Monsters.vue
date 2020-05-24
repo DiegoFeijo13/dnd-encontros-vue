@@ -1,62 +1,34 @@
 <template>
   <div>
     <v-app-bar app color="primary" dark>
-      <v-row>
-        <v-col>
-          <h1>Monstros</h1>
-        </v-col>
-        <v-col lg="2" align-self="end">
-          <add-monster @saveMonster="addMonster" />
-        </v-col>
-      </v-row>
+      <h1>Monstros</h1>
+      <v-spacer></v-spacer>
+      <add-monster-dialog />
     </v-app-bar>
 
     <v-container fluid>
-      <v-row dense>
-        <v-col v-for="(m, n) in monsters" :key="n">
-          <monster :monster="m" @removeMonster="removeMonster(n)" @saveMonster="saveMonsters()" />
-        </v-col>
-      </v-row>
+      <div v-for="(m, n) in monsters" :key="n" class="ma-3">
+        <monster :monster="m" />
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Monster from "./Monster.vue";
-import AddMonster from "./AddMonster.vue";
+import AddMonsterDialog from "./AddMonsterDialog";
 
 export default {
   components: {
     Monster,
-    AddMonster
+    AddMonsterDialog
   },
-  data() {
-    return {
-      monsters: []
-    };
-  },
-  mounted() {
-    if (localStorage.getItem("monsters")) {
-      try {
-        this.monsters = JSON.parse(localStorage.getItem("monsters"));
-      } catch (e) {
-        localStorage.removeItem("monsters");
-      }
-    }
-  },
-  methods: {
-    addMonster(monster) {
-      this.monsters.push(monster);
-      this.saveMonsters();
-    },
-    removeMonster(x) {
-      this.monsters.splice(x, 1);
-      this.saveMonsters();
-    },
-    saveMonsters() {
-      const parsed = JSON.stringify(this.monsters);
-      localStorage.setItem("monsters", parsed);
-    }
+  computed: mapState({
+    monsters: state => state.monster.all
+  }),
+  created() {
+    this.$store.dispatch("monster/getAll");
   }
 };
 </script>

@@ -5,27 +5,28 @@
         <v-icon>fa-edit</v-icon>
       </v-btn>
     </template>
-    <player-form :playerToEdit="playerToEdit" title="Editar PDJ" @confirm="confirm" />
+    <monster-form :monsterToEdit="monsterToEdit" title="Editar Monstro" @confirm="confirm" />
   </v-dialog>
 </template>
 
 <script>
-import PlayerForm from "./PlayerForm.vue";
+import MonsterForm from "./MonsterForm.vue";
 
 export default {
-  components: { PlayerForm },
+  components: { MonsterForm },
   props: {
-    playerToEdit: Object
+    monsterToEdit: Object
   },
+
   data() {
     return {
       dialog: false
     };
   },
   methods: {
-    confirm(player) {
+    confirm(monster) {
       this.dialog = false;
-      this.$store.commit("player/update", player);
+      this.$store.commit("monster/update", monster);
     }
   }
 };

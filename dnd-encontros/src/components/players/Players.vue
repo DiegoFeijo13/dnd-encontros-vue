@@ -1,22 +1,15 @@
 <template>
   <div>
     <v-app-bar app color="primary" dark>
-      <v-row>
-        <v-col>
-          <h1>Personagens dos Jogadores</h1>
-        </v-col>
-        <v-col lg="2" align-self="end">
-          <add-player-dialog />
-        </v-col>
-      </v-row>
+      <h1>PDJs</h1>
+      <v-spacer></v-spacer>
+      <add-player-dialog />
     </v-app-bar>
 
-    <v-container fluid>
-      <v-row dense>
-        <v-col v-for="(p, n) in players" :key="n">
-          <Player :player="p" />
-        </v-col>
-      </v-row>
+    <v-container>
+      <div v-for="(p, n) in players" :key="n" class="ma-3">
+        <Player :player="p" />
+      </div>
     </v-container>
   </div>
 </template>
@@ -32,7 +25,7 @@ export default {
     players: state => state.player.all
   }),
   created() {
-    this.$store.dispatch("player/getAllPlayers");
+    this.$store.dispatch("player/getAll");
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="my-2" max-width="274">
+  <v-card class="my-2">
     <v-list-item>
       <v-list-item-avatar color="grey">
         <v-img :src="monster.img"></v-img>
@@ -13,43 +13,28 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-text>
-      <v-row dense>
-        <v-col>
-          <table style="width:100%;">
-            <tr>
-              <td class="label">ND</td>
-              <td class="value">{{monster.nd}}</td>
-            </tr>
-            <tr>
-              <td class="label">PV</td>
-              <td class="value">{{monster.dados}}{{monster.dv}}+{{monster.pvbase}}</td>
-            </tr>
-          </table>
-        </v-col>
-        <v-col>
-          <table style="width:100%;">
-            <tr>
-              <td class="label">DES</td>
-              <td class="value">{{monster.destreza}}</td>
-            </tr>
-            <tr>
-              <td class="label">XP</td>
-              <td class="value">{{monster.xp}}</td>
-            </tr>
-          </table>
-        </v-col>
-      </v-row>
+      <table>
+        <thead>
+          <tr>
+            <th>ND</th>
+            <th>PV</th>
+            <th>DES</th>
+            <th>XP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="value">{{monster.nd}}</td>
+            <td class="value">{{monster.dados}}{{monster.dv}}+{{monster.pvbase}}</td>
+            <td class="value">{{monster.destreza}}</td>
+            <td class="value">{{monster.xp}}</td>
+          </tr>
+        </tbody>
+      </table>
     </v-card-text>
 
     <v-card-actions>
-      <v-dialog v-model="editdialog" width="500">
-        <template v-slot:activator="{ on }">
-          <v-btn icon blue v-on="on">
-            <v-icon>fa-edit</v-icon>
-          </v-btn>
-        </template>
-        <MonsterForm :monsterToEdit="monster" title="Editar Monstro" @saveMonster="saveMonster" />
-      </v-dialog>
+      <edit-monster-dialog :monsterToEdit="monster" />
       <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
@@ -60,7 +45,7 @@
         <ConfirmationDialog
           :title="'Remover Monstro?'"
           :text="`O Monstro ${monster.nome} será removido. Esta ação não pode ser desfeita. Confirmar?`"
-          @confirm="removeMonster"
+          @confirm="remove"
         />
       </v-dialog>
     </v-card-actions>
@@ -70,31 +55,26 @@
 
 <script>
 import ConfirmationDialog from "../template/ConfirmationDialog";
-import MonsterForm from "./MonsterForm";
+import EditMonsterDialog from "./EditMonsterDialog";
 
 export default {
   components: {
     ConfirmationDialog,
-    MonsterForm
+    EditMonsterDialog
   },
   props: {
-    monster: {}
+    monster: Object
   },
   data() {
     return {
       removedialog: false,
-      editdialog: false
     };
   },
   methods: {
-    saveMonster() {
-      this.editdialog = false;
-      this.$emit("saveMonster", this.monster);
-    },
-    removeMonster(value) {
+    remove(value) {
       this.removedialog = false;
       if (value) {
-        this.$emit("removeMonster", this.monster);
+        this.$store.commit("monster/remove", this.monster);
       }
     }
   }
@@ -102,14 +82,16 @@ export default {
 </script>
 
 <style scoped>
-.label {
-  width: 35%;
+table {
+  width: 100%;
+}
+table th {
   text-align: center;
   background-color: black;
   color: white;
 }
 
-.value {
+table td {
   text-align: center;
   background-color: lightgray;
 }

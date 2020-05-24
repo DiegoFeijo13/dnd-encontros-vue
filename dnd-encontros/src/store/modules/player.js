@@ -10,36 +10,56 @@ const getters = {}
 
 // actions
 const actions = {
-  getAllPlayers({ commit }) {
+  getAll({ commit }) {
     storage.getPlayers(players => {
-      commit('setPlayers', players)
+      commit('set', players)
     })
   },
 }
 
 // mutations
 const mutations = {
-  setPlayers(state, players) {
+  set(state, players) {
     state.all = players
     state.lastID = Math.max.apply(Math, players.map(function (p) { return p.id; }))
     if (isNaN(state.lastID))
       state.lastID = 0
   },
 
-  addPlayer(state, player) {
-    player.id = ++state.lastID
-    state.all.push(player)
+  add(state, player) {
+    let newPlayer = {
+      id : ++state.lastID,
+      nome: player.nome,
+      classe: player.classe,
+      raca: player.raca,
+      nivel: player.nivel,
+      ca: player.ca,
+      pv: player.pv,
+      percepcao: player.percepcao,
+      investigacao: player.investigacao,
+      intuicao: player.intuicao
+    }
+    state.all.push(newPlayer)
     storage.savePlayers(state.all)
   },
 
-  updatePlayer(state, player) {
-    let idx = state.all.findIndex(p => p.id == player.id)
-    state.all.splice(idx, 1)
-    state.all.push(player)
+  update(state, player) {
+    let pl = state.all.find(p => p.id == player.id)
+
+    pl.nome = player.nome
+    pl.classe = player.classe
+    pl.raca = player.raca
+    pl.nivel = player.nivel
+    pl.ca = player.ca
+    pl.pv = player.pv
+    pl.percepcao = player.percepcao
+    pl.investigacao = player.investigacao
+    pl.intuicao = player.intuicao
+
     storage.savePlayers(state.all)
   },
 
-  removePlayer(state, player) {
+  remove(state, player) {
     let idx = state.all.findIndex(p => p.id == player.id)
     state.all.splice(idx, 1)
     storage.savePlayers(state.all)

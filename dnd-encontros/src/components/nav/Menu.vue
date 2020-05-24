@@ -29,6 +29,18 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-spacer></v-spacer>
+    <v-footer    
+      absolute
+      class="font-weight-medium"
+    >
+      <v-col
+        class="text-center"
+        cols="12"
+      >
+        {{ new Date().getFullYear() }} — <strong>Jepo</strong>
+      </v-col>
+    </v-footer>
   </v-navigation-drawer>
 </template>
 

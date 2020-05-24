@@ -1,5 +1,5 @@
 <template>
-  <v-card class="my-2" max-width="274">
+  <v-card>
     <v-list-item>
       <v-list-item-avatar color="grey">
         <img
@@ -15,60 +15,28 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-text>
-      <v-row dense>
-        <v-col>
-          <v-avatar tile size="36" color="black">
-            <span class="label">LVL</span>
-          </v-avatar>
-          <v-avatar tile size="36" color="#d3d3d3">
-            <span class="value">{{player.nivel}}</span>
-          </v-avatar>
-        </v-col>
-        <v-col>
-          <v-avatar tile size="36" color="black">
-            <span class="label">PER</span>
-          </v-avatar>
-          <v-avatar tile size="36" color="#d3d3d3">
-            <span class="value">{{player.percepcao}}</span>
-          </v-avatar>
-        </v-col>
-      </v-row>
-      <v-row dense>
-        <v-col>
-          <v-avatar tile size="36" color="black">
-            <span class="label">CA</span>
-          </v-avatar>
-          <v-avatar tile size="36" color="#d3d3d3">
-            <span class="value">{{player.ca}}</span>
-          </v-avatar>
-        </v-col>
-        <v-col>
-          <v-avatar tile size="36" color="black">
-            <span class="label">INT</span>
-          </v-avatar>
-          <v-avatar tile size="36" color="#d3d3d3">
-            <span class="value">{{player.intuicao}}</span>
-          </v-avatar>
-        </v-col>
-      </v-row>
-      <v-row dense>
-        <v-col>
-          <v-avatar tile size="36" color="black">
-            <span class="label">PV</span>
-          </v-avatar>
-          <v-avatar tile size="36" color="#d3d3d3">
-            <span class="value">{{player.pv}}</span>
-          </v-avatar>
-        </v-col>
-        <v-col>
-          <v-avatar tile size="36" color="black">
-            <span class="label">INV</span>
-          </v-avatar>
-          <v-avatar tile size="36" color="#d3d3d3">
-            <span class="value">{{player.investigacao}}</span>
-          </v-avatar>
-        </v-col>
-      </v-row>
+      <table>
+        <thead>
+          <tr>
+            <th>LVL</th>
+            <th>CA</th>
+            <th>PV</th>
+            <th>PER</th>
+            <th>INT</th>
+            <th>INV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{player.nivel}}</td>
+            <td>{{player.ca}}</td>
+            <td>{{player.pv}}</td>
+            <td>{{player.percepcao}}</td>
+            <td>{{player.intuicao}}</td>
+            <td>{{player.investigacao}}</td>
+          </tr>
+        </tbody>
+      </table>
     </v-card-text>
 
     <v-card-actions>
@@ -83,7 +51,7 @@
         <ConfirmationDialog
           :title="'Remover PDJ?'"
           :text="`O Personagem ${player.nome} será removido. Esta ação não pode ser desfeita. Confirmar?`"
-          @confirm="removePlayer"
+          @confirm="remove"
         />
       </v-dialog>
     </v-card-actions>
@@ -101,11 +69,10 @@ export default {
     EditPlayerDialog
   },
   props: {
-    player: {}
+    player: Object
   },
   data() {
     return {
-      editdialog: false,
       removedialog: false,
       condicoes: [
         "Agarrado",
@@ -127,10 +94,10 @@ export default {
     };
   },
   methods: {
-    removePlayer(value) {
+    remove(value) {
       this.removedialog = false;
       if (value) {
-        this.$store.commit("player/removePlayer", this.player);
+        this.$store.commit("player/remove", this.player);
       }
     }
   }
@@ -138,12 +105,17 @@ export default {
 </script>
 
 <style scoped>
-.label {
+table {
+  width: 100%;
+}
+table th {
   text-align: center;
+  background-color: black;
   color: white;
 }
 
-.value {
+table td {
   text-align: center;
+  background-color: lightgray;
 }
 </style>

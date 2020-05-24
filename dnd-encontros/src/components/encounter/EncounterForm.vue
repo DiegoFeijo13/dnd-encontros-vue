@@ -4,7 +4,14 @@
       <v-card-title class="headline grey lighten-2" primary-title>{{title}}</v-card-title>
 
       <v-card-text>
-        <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Nome" required validate-on-blur></v-text-field>
+        <v-text-field
+          v-model="name"
+          :counter="10"
+          :rules="nameRules"
+          label="Nome"
+          required
+          validate-on-blur
+        ></v-text-field>
       </v-card-text>
 
       <v-card-actions>
