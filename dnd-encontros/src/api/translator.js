@@ -12,19 +12,19 @@ function speed(val) {
     }
 
     if (!isNaN(burrow)) {
-        deslocamento.push({descricao: 'escavação', valor: feetToMeters(burrow)});
+        deslocamento.push({ descricao: 'escavação', valor: feetToMeters(burrow) });
     }
 
     if (!isNaN(climb)) {
-        deslocamento.push({descricao: 'escalar', valor:feetToMeters(climb)} );
+        deslocamento.push({ descricao: 'escalar', valor: feetToMeters(climb) });
     }
 
     if (!isNaN(fly)) {
-        deslocamento.push({descricao: 'vôo', valor: feetToMeters(fly)} );
+        deslocamento.push({ descricao: 'vôo', valor: feetToMeters(fly) });
     }
 
     if (!isNaN(swim)) {
-        deslocamento.push({descricao: 'nadar', valor: feetToMeters(swim)});
+        deslocamento.push({ descricao: 'nadar', valor: feetToMeters(swim) });
     }
 
     return deslocamento
@@ -102,24 +102,59 @@ function senses(val) {
     }
 
     if (!isNaN(darkvision)) {
-        sentidos.push({descricao: 'visão no escuro', valor: `${feetToMeters(darkvision)} m`});
+        sentidos.push({ descricao: 'visão no escuro', valor: `${feetToMeters(darkvision)} m` });
     }
 
     if (!isNaN(blindsight)) {
-        sentidos.push({descricao: 'percepção às cegas', valor: `${feetToMeters(blindsight)} m`} );
+        sentidos.push({ descricao: 'percepção às cegas', valor: `${feetToMeters(blindsight)} m` });
     }
 
     if (!isNaN(tremorsense)) {
-        sentidos.push({descricao: 'sentido sísmico', valor: `${feetToMeters(tremorsense)} m`} );
+        sentidos.push({ descricao: 'sentido sísmico', valor: `${feetToMeters(tremorsense)} m` });
     }
 
     if (!isNaN(truesight)) {
-        sentidos.push({descricao: 'visão verdadeira', valor: `${feetToMeters(truesight)} m`});
+        sentidos.push({ descricao: 'visão verdadeira', valor: `${feetToMeters(truesight)} m` });
     }
 
     return sentidos
 }
 
+function condition(val) {
+    switch (val) {
+        case 'blinded':
+            return 'cego'
+        case 'charmed':
+            return 'enfeitiçado'
+        case 'deafened':
+            return 'surdo'
+        case 'frightened':
+            return 'amedontrado'
+        case 'grappled':
+            return 'agarrado'
+        case 'incapacitated':
+            return 'incapacitado'
+        case 'invisible':
+            return 'invisível'
+        case 'paralyzed':
+            return 'paralizado'
+        case 'petrified':
+            return 'petrificado'
+        case 'poisoned':
+            return 'envenenado'
+        case 'prone':
+            return 'caído'
+        case 'restrained':
+            return 'impedido'
+        case 'stunned':
+            return 'atordoado'
+        case 'unconscious':
+            return 'inconsciente'
+        case 'exhaustion':
+            return 'exausto'
+    }
+
+}
 //Conversores
 function feetToMeters(ftval) {
     if (isNaN(ftval)) {
@@ -140,7 +175,10 @@ export default {
     translateSpeed(val) {
         return speed(val)
     },
-    translateSenses(val){
+    translateSenses(val) {
         return senses(val)
+    },
+    translateCondition(val){
+        return condition(val)
     }
 }

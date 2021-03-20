@@ -37,6 +37,38 @@
 
     <v-list-item>
       <v-list-item-content class="primary--text">
+          <CardLine
+          v-if="
+            monster.damage_vulnerabilities != null &&
+            monster.damage_vulnerabilities.length > 0
+          "
+          :title="'Vulnerabilidades'"
+          :text="arrayToString(monster.damage_vulnerabilities)"
+        />
+        <CardLine
+          v-if="
+            monster.damage_resistances != null &&
+            monster.damage_resistances.length > 0
+          "
+          :title="'Resistência a Dano'"
+          :text="arrayToString(monster.damage_resistances)"
+        />
+        <CardLine
+          v-if="
+            monster.damage_immunities != null &&
+            monster.damage_immunities.length > 0
+          "
+          :title="'Imunidade a Dano'"
+          :text="arrayToString(monster.damage_immunities)"
+        />
+        <CardLine
+          v-if="
+            monster.condition_immunities != null &&
+            monster.condition_immunities.length > 0
+          "
+          :title="'Imunidade a Condição'"
+          :text="conditionImmunities()"
+        />
         <CardLine
           v-if="savingThrows() != null"
           :title="'Testes de Resistência'"
@@ -47,8 +79,16 @@
           :title="'Perícias'"
           :text="skills()"
         />
-        <CardLine v-if="senses() != null" :title="'Sentidos'" :text="senses()" />
-        <CardLine v-if="monster.languages != undefined && monster.languages.length > 0" :title="'Idiomas'" :text="monster.languages" />
+        <CardLine
+          v-if="senses() != null"
+          :title="'Sentidos'"
+          :text="senses()"
+        />
+        <CardLine
+          v-if="monster.languages != undefined && monster.languages.length > 0"
+          :title="'Idiomas'"
+          :text="monster.languages"
+        />
         <CardLine :title="'Nível de Desafio'" :text="ndToText()" />
       </v-list-item-content>
     </v-list-item>
@@ -63,49 +103,32 @@
       </v-list-item-content>
     </v-list-item>
 
-    <v-list-item
+    <Actions
       v-if="monster.actions != undefined && monster.actions.length > 0"
-    >
-      <v-list-item-content class="subtitle-1 primary--text">
-        <h3 class="primary--text">Ações</h3>
-        <v-divider></v-divider>
-        <p class="pa-1" v-for="(action, i) in monster.actions" :key="i">
-          <strong class="font-italic">{{ action.name }}.</strong>
-          {{ action.desc }}
-        </p>
-      </v-list-item-content>
-    </v-list-item>
-
-    <v-list-item
+      :actions="monster.actions"
+      :title="'Ações'"
+    />
+    <Actions
       v-if="
         monster.legendary_actions != undefined &&
         monster.legendary_actions.length > 0
       "
-    >
-      <v-list-item-content class="subtitle-1 primary--text">
-        <h3 class="primary--text">Ações Lendárias</h3>
-        <v-divider></v-divider>
-        <p
-          class="pa-1"
-          v-for="(action, i) in monster.legendary_actions"
-          :key="i"
-        >
-          <strong class="font-italic">{{ action.name }}.</strong>
-          {{ action.desc }}
-        </p>
-      </v-list-item-content>
-    </v-list-item>
+      :actions="monster.legendary_actions"
+      :title="'Ações Lendárias'"
+    />
   </v-card>
 </template>
 
 <script>
 import Attributes from "./Attributes.vue";
+import Actions from "./Actions.vue";
 import CardLine from "../ui/CardLine.vue";
 import translator from "../../api/translator";
 import util from "../../api/util";
 
 export default {
   components: {
+    Actions,
     Attributes,
     CardLine,
   },
@@ -137,6 +160,38 @@ export default {
       });
 
       return text;
+    },
+    arrayToString(value) {
+      if (value == null || value == undefined || value.length == 0) return null;
+
+      let text = "";
+      value.forEach((x) => {
+        if (text == "") text = x;
+        else text = `${text}; ${x}`;
+      });
+
+      return text;
+    },
+    conditionImmunities() {
+      let conditions = this.monster.condition_immunities;
+      if (
+        conditions == null ||
+        conditions == undefined ||
+        conditions.length == 0
+      )
+        return null;
+
+      let text = "";
+      conditions.forEach((x) => {
+        let t = translator.translateCondition(x.index);
+        if (text == "") {
+          text = t;
+        } else {
+          text = `${text}, ${t}`;
+        }
+      });
+
+      return text
     },
     savingThrows() {
       let sts = this.monster.proficiencies.filter((x) =>
