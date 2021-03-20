@@ -5,12 +5,7 @@
 
       <v-card-text>
         <v-select v-model="selected" :items="items">
-          <template slot="selection" slot-scope="data">
-            <monster-avatar :monsterToShow="data.item.value" />
-          </template>
-          <template slot="item" slot-scope="data">
-            <monster-avatar :monsterToShow="data.item.value" />
-          </template>
+          
         </v-select>
       </v-card-text>
 
@@ -23,9 +18,8 @@
 </template>
 
 <script>
-import MonsterAvatar from "../monsters/MonsterAvatar";
 export default {
-  components: { MonsterAvatar },
+  components: {  },
   data: () => ({
     valid: true,
     selected: Object,

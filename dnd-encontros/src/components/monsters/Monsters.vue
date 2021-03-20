@@ -2,8 +2,7 @@
   <div>
     <v-app-bar app color="primary" dark>
       <h1>Monstros</h1>
-      <v-spacer></v-spacer>
-      <add-monster-dialog />
+      <v-spacer></v-spacer>      
     </v-app-bar>
 
     <v-container fluid>
@@ -23,7 +22,7 @@
             md="4"
             lg="3"
           >
-          <Monster :monster="m" />
+          <MonsterCard :url="m.url" />
           </v-col>
         </v-row>
       </template>
@@ -34,13 +33,11 @@
 
 <script>
 import { mapState } from "vuex";
-import Monster from "./Monster.vue";
-import AddMonsterDialog from "./AddMonsterDialog";
+import MonsterCard from "./MonsterCard.vue";
 
 export default {
   components: {
-    Monster,
-    AddMonsterDialog,
+    MonsterCard,
   },
   computed: mapState({
     monsters: (state) => state.monster.all,

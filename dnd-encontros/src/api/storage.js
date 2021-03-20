@@ -16,23 +16,6 @@ function savePlayersToLocalStorage(players) {
     localStorage.setItem("players", parsed);
 }
 
-function getMonstersFromLocalStorage() {
-    let monsters = [];
-    if (localStorage.getItem("monsters")) {
-        try {
-            monsters = JSON.parse(localStorage.getItem("monsters"));
-        } catch (e) {
-            localStorage.removeItem("monsters");
-        }
-    }
-    return monsters;
-}
-
-function saveMonstersToLocalStorage(monsters) {
-    const parsed = JSON.stringify(monsters);
-    localStorage.setItem("monsters", parsed);
-}
-
 function getEncountersFromLocalStorage() {
     let encounters = [];
     if (localStorage.getItem("encounters")) {
@@ -56,12 +39,6 @@ export default {
     },
     savePlayers(players) {
         savePlayersToLocalStorage(players)
-    },
-    getMonsters(cb) {
-        cb(getMonstersFromLocalStorage())
-    },
-    saveMonsters(monsters) {
-        saveMonstersToLocalStorage(monsters)
     },
     getEncounters(cb) {
         cb(getEncountersFromLocalStorage())
