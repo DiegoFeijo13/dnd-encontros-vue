@@ -9,6 +9,9 @@
           {{ monster.type }} / {{ monster.alignment }}
         </v-list-item-subtitle>
       </v-list-item-content>
+      <v-list-item-avatar>
+        <ViewMonster :monster="monster"/>
+      </v-list-item-avatar>
     </v-list-item>
 
     <v-divider class="mx-4"></v-divider>
@@ -26,10 +29,13 @@
 <script>
 import axios from "axios";
 import CardLine from "../ui/CardLine.vue";
+import ViewMonster from "./ViewMonster.vue"
+import util from "../../api/util"
 
 export default {
   components: {
     CardLine,
+    ViewMonster
   },
   props: {
     url: {
@@ -55,7 +61,7 @@ export default {
       return `${this.monster.hit_dice}+${this.monster.hit_points}`;
     },
     ndToText() {
-      return `${this.monster.challenge_rating} (${this.monster.xp} XP)`;
+      return `${util.numToFractionString(this.monster.challenge_rating)} (${this.monster.xp} XP)`;
     },
   },
 };

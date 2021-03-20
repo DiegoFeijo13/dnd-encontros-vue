@@ -1,7 +1,7 @@
 <template>
-  <v-list-item-subtitle>
+  <div>
     <strong>{{ title }}</strong> {{ text }}
-  </v-list-item-subtitle>
+  </div>
 </template>
 
 <script>
