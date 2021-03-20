@@ -1,42 +1,48 @@
 <template>
-  <v-card>
+  <v-card max-width="374">
     <v-list-item>
+      <v-list-item-content>
+        <v-list-item-title class="headline">
+          {{ player.nome }}
+        </v-list-item-title>
+        <v-list-item-subtitle>
+          {{ player.raca }} / {{ player.classe }}
+        </v-list-item-subtitle>
+      </v-list-item-content>
       <v-list-item-avatar color="grey">
         <img
           src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/lou_devole.jpg"
         />
       </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="headline">{{player.nome}}</v-list-item-title>
-        <v-list-item-subtitle>{{player.raca}} / {{player.classe}}</v-list-item-subtitle>
-      </v-list-item-content>
     </v-list-item>
 
     <v-divider class="mx-4"></v-divider>
 
     <v-card-text>
-      <table>
-        <thead>
-          <tr>
-            <th>LVL</th>
-            <th>CA</th>
-            <th>PV</th>
-            <th>PER</th>
-            <th>INT</th>
-            <th>INV</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{player.nivel}}</td>
-            <td>{{player.ca}}</td>
-            <td>{{player.pv}}</td>
-            <td>{{player.percepcao}}</td>
-            <td>{{player.intuicao}}</td>
-            <td>{{player.investigacao}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <v-container>
+        <v-row>
+          <v-col>
+            <badge :title="'CA'" :text="player.ca"></badge>
+          </v-col>
+          <v-col>
+            <badge :title="'PV'" :text="player.pv"></badge>
+          </v-col>
+          <v-col>
+            <badge :title="'LVL'" :text="player.nivel"></badge>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <badge :title="'PER'" :text="player.percepcao"></badge>
+          </v-col>
+          <v-col>
+            <badge :title="'INT'" :text="player.intuicao"></badge>
+          </v-col>
+          <v-col>
+            <badge :title="'INV'" :text="player.investigacao"></badge>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card-text>
 
     <v-card-actions>
@@ -61,15 +67,17 @@
 
 <script>
 import ConfirmationDialog from "../template/ConfirmationDialog";
+import Badge from "../ui/Badge.vue";
 import EditPlayerDialog from "./EditPlayerDialog";
 
 export default {
   components: {
     ConfirmationDialog,
-    EditPlayerDialog
+    Badge,
+    EditPlayerDialog,
   },
   props: {
-    player: Object
+    player: Object,
   },
   data() {
     return {
@@ -88,9 +96,9 @@ export default {
         "Invisível",
         "Paralisado",
         "Petrificado",
-        "Surdo"
+        "Surdo",
       ],
-      items: []
+      items: [],
     };
   },
   methods: {
@@ -99,8 +107,8 @@ export default {
       if (value) {
         this.$store.commit("player/remove", this.player);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

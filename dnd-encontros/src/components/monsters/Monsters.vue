@@ -7,9 +7,27 @@
     </v-app-bar>
 
     <v-container fluid>
-      <div v-for="(m, n) in monsters" :key="n" class="ma-3">
-        <monster :monster="m" />
-      </div>
+      <v-data-iterator
+      :items="monsters"
+      item-key="nome"
+      :items-per-page="4"      
+      hide-default-footer
+    >
+      <template v-slot:default="props">
+        <v-row>
+          <v-col
+            v-for="(m,n) in monsters"
+            :key="n"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+          >
+          <Monster :monster="m" />
+          </v-col>
+        </v-row>
+      </template>
+    </v-data-iterator>
     </v-container>
   </div>
 </template>
@@ -22,13 +40,13 @@ import AddMonsterDialog from "./AddMonsterDialog";
 export default {
   components: {
     Monster,
-    AddMonsterDialog
+    AddMonsterDialog,
   },
   computed: mapState({
-    monsters: state => state.monster.all
+    monsters: (state) => state.monster.all,
   }),
   created() {
     this.$store.dispatch("monster/getAll");
-  }
+  },
 };
 </script>

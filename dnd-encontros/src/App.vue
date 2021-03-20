@@ -1,12 +1,10 @@
 <template>
-  <v-app>
+  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <Menu @nav="nav"></Menu>
 
-    <v-content>
+    <v-main>
       <component :is="componente" />
-    </v-content>
-
-    
+    </v-main>
   </v-app>
 </template>
 
@@ -23,13 +21,19 @@ export default {
     Players,
     Monsters,
     Encounters,
-    Menu
+    Menu,
   },
 
   data: () => ({
     componente: "Players",
-    title: ""
+    title: "",
   }),
+
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? "dark" : "light";
+    },
+  },
 
   methods: {
     nav(value) {
@@ -37,7 +41,7 @@ export default {
     },
     changeTitle(n) {
       this.title = n;
-    }
-  }
+    },
+  },
 };
 </script>

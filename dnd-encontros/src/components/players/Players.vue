@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container color="grey">
     <v-app-bar app color="primary" dark>
       <h1>PDJs</h1>
       <v-spacer></v-spacer>
@@ -7,11 +7,13 @@
     </v-app-bar>
 
     <v-container>
-      <div v-for="(p, n) in players" :key="n" class="ma-3">
-        <Player :player="p" />
-      </div>
+      <v-row>
+        <v-col cols="4" v-for="(p, n) in players" :key="n" class="ma-0">
+          <Player :player="p" />
+        </v-col>
+      </v-row>
     </v-container>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -22,10 +24,10 @@ import AddPlayerDialog from "./AddPlayerDialog.vue";
 export default {
   components: { Player, AddPlayerDialog },
   computed: mapState({
-    players: state => state.player.all
+    players: (state) => state.player.all,
   }),
   created() {
     this.$store.dispatch("player/getAll");
-  }
+  },
 };
 </script>
