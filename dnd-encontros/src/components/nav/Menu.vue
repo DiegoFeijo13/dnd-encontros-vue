@@ -53,7 +53,7 @@ export default {
         { title: "PDJs", icon: "mdi-home-city", area: "Players" },
         { title: "Monstros", icon: "mdi-account", area: "Monsters" },
         {
-          title: "Encontro",
+          title: "Encontros",
           icon: "mdi-account-group-outline",
           area: "Encounters"
         }

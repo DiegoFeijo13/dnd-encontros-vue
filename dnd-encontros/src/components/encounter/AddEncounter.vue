@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-model="dialog" fullscreen>
       <template v-slot:activator="{ on }">
         <v-btn color="brown lighten-2" dark v-on="on">Novo Encontro</v-btn>
       </template>
