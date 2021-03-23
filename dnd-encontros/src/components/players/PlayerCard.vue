@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="374">
+  <v-card class="my-2" color="background">
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="headline">
@@ -19,34 +19,23 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col>
-            <badge :title="'CA'" :text="player.ca"></badge>
-          </v-col>
-          <v-col>
-            <badge :title="'PV'" :text="player.pv"></badge>
-          </v-col>
-          <v-col>
-            <badge :title="'LVL'" :text="player.nivel"></badge>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <badge :title="'PER'" :text="player.percepcao"></badge>
-          </v-col>
-          <v-col>
-            <badge :title="'INT'" :text="player.intuicao"></badge>
-          </v-col>
-          <v-col>
-            <badge :title="'INV'" :text="player.investigacao"></badge>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-list-item>
+        <v-list-item-content class="primary--text">
+          <CardLine
+            :title="'Classe de Armadura'"
+            :text="player.ca.toString()"
+          />
+          <CardLine :title="'Pontos de Vida'" :text="player.pv.toString()" />
+          <CardLine :title="'Nível'" :text="player.nivel.toString()" />
+          <CardLine :title="'Percepção'" :text="player.percepcao.toString()" />
+          <CardLine :title="'Intuição'" :text="player.intuicao.toString()" />
+          <CardLine :title="'Investigação'" :text="player.investigacao.toString()" />
+        </v-list-item-content>
+      </v-list-item>      
     </v-card-text>
 
     <v-card-actions>
-      <edit-player-dialog :playerToEdit="player" />
+      <EditPlayerDialog :playerToEdit="player" />
       <v-spacer></v-spacer>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
@@ -66,14 +55,14 @@
 
 
 <script>
+import CardLine from "../ui/CardLine.vue";
 import ConfirmationDialog from "../template/ConfirmationDialog";
-import Badge from "../ui/Badge.vue";
 import EditPlayerDialog from "./EditPlayerDialog";
 
 export default {
   components: {
+    CardLine,
     ConfirmationDialog,
-    Badge,
     EditPlayerDialog,
   },
   props: {

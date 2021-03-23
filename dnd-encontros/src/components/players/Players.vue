@@ -1,28 +1,24 @@
 <template>
-  <v-container color="grey">
-    <v-app-bar app color="primary" dark>
-      <h1>PDJs</h1>
+  <v-card class="ma-4">
+    <v-card-title>
+      <span class="heading"> Personagens de Jogadores</span>
       <v-spacer></v-spacer>
-      <add-player-dialog />
-    </v-app-bar>
+      <AddPlayerDialog />
+    </v-card-title>
+    <v-card-text> 
+    <PlayerData :players="players" />
 
-    <v-container>
-      <v-row>
-        <v-col cols="4" v-for="(p, n) in players" :key="n" class="ma-0">
-          <Player :player="p" />
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-container>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import Player from "./Player.vue";
+import PlayerData from "./PlayerData.vue";
 import AddPlayerDialog from "./AddPlayerDialog.vue";
 
 export default {
-  components: { Player, AddPlayerDialog },
+  components: { PlayerData, AddPlayerDialog },
   computed: mapState({
     players: (state) => state.player.all,
   }),

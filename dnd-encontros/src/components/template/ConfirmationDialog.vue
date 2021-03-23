@@ -1,17 +1,20 @@
 <template>
   <v-card>
-    <v-card-title class="headline grey lighten-2" primary-title>{{title}}</v-card-title>
+    <v-card-title class="headline primary white--text" primary-title>{{
+      title
+    }}</v-card-title>
 
     <v-card-text>
-      {{text}}
+      
+      <p>{{ text }}</p>
     </v-card-text>
 
     <v-divider></v-divider>
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" text @click="confirm(false)">Cancelar</v-btn>
-      <v-btn color="primary" text @click="confirm(true)">Ok</v-btn>
+      <v-btn @click="confirm(false)">Cancelar</v-btn>
+      <v-btn color="primary" @click="confirm(true)">Ok</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -20,12 +23,12 @@
 export default {
   props: {
     text: String,
-    title: String
+    title: String,
   },
   methods: {
     confirm(value) {
-      this.$emit('confirm', value)
-    }
-  }
+      this.$emit("confirm", value);
+    },
+  },
 };
 </script>

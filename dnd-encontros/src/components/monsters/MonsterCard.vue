@@ -1,5 +1,5 @@
 <template>
-  <v-card class="my-2" color="#ffe599">
+  <v-card class="my-2" color="background">
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="headline primary--text">
@@ -10,7 +10,7 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-avatar>
-        <ViewMonster :monster="monster"/>
+        <ViewMonster :monster="monster" />
       </v-list-item-avatar>
     </v-list-item>
 
@@ -22,6 +22,16 @@
         <CardLine :title="'Pontos de Vida'" :text="pvToText()" />
       </v-list-item-content>
     </v-list-item>
+    <v-card-actions>
+      <v-btn
+        v-if="addBtn"
+        icon
+        color="primary"
+        v-on:click="$emit('add', url)"
+      >
+        <v-icon> mdi-plus-box </v-icon>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -29,18 +39,22 @@
 <script>
 import axios from "axios";
 import CardLine from "../ui/CardLine.vue";
-import ViewMonster from "./ViewMonster.vue"
-import util from "../../api/util"
+import ViewMonster from "./ViewMonster.vue";
+import util from "../../api/util";
 
 export default {
   components: {
     CardLine,
-    ViewMonster
+    ViewMonster,
   },
   props: {
     url: {
       type: String,
       required: true,
+    },
+    addBtn: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -61,7 +75,9 @@ export default {
       return `${this.monster.hit_dice}+${this.monster.hit_points}`;
     },
     ndToText() {
-      return `${util.numToFractionString(this.monster.challenge_rating)} (${this.monster.xp} XP)`;
+      return `${util.numToFractionString(this.monster.challenge_rating)} (${
+        this.monster.xp
+      } XP)`;
     },
   },
 };

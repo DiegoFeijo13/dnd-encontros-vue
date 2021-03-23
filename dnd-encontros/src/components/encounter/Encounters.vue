@@ -1,62 +1,32 @@
 <template>
-  <div>
-    <v-app-bar app color="primary" dark>
-      <v-row>
-        <v-col>
-          <h1>Encontros</h1>
-        </v-col>
-        <v-col lg="2" align-self="end">
-          <add-encounter @saveEncounter="addEncounter" />
-        </v-col>
-      </v-row>
-    </v-app-bar>
+ <v-card class="ma-4">
+    <v-card-title>
+      <span class="heading"> Encontros</span>
+      <v-spacer></v-spacer>
+          <AddEncounter />
+    </v-card-title>
+    <v-card-text> 
+    <EncounterData :encounters="encounters" />
 
-    <v-container fluid>
-      <v-row dense>
-        <v-col v-for="(e, n) in encounters" :key="n">
-          <encounter :encounter="e" @removeEncounter="removeEncounter(n)" />
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
-import Encounter from "./Encounter.vue";
+import { mapState } from "vuex";
+import EncounterData from "./EncounterData.vue";
 import AddEncounter from "./AddEncounter.vue";
 
 export default {
   components: {
-    Encounter,
-    AddEncounter
+    EncounterData,
+    AddEncounter,
   },
-  data() {
-    return {
-      encounters: []
-    };
+  computed: mapState({
+    encounters: (state) => state.encounter.all,
+  }),
+  created() {
+    this.$store.dispatch("encounter/getAll");
   },
-  mounted() {
-    if (localStorage.getItem("encounters")) {
-      try {
-        this.encounters = JSON.parse(localStorage.getItem("encounters"));
-      } catch (e) {
-        localStorage.removeItem("encounters");
-      }
-    }
-  },
-  methods: {
-    addEncounter(e) {
-      this.encounters.push(e);
-      this.saveEncounters();
-    },
-    removeEncounter(x) {
-      this.encounters.splice(x, 1);
-      this.saveEncounters();
-    },
-    saveEncounters() {
-      const parsed = JSON.stringify(this.encounters);
-      localStorage.setItem("encounters", parsed);
-    }
-  }
 };
 </script>

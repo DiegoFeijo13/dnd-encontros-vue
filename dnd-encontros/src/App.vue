@@ -45,3 +45,10 @@ export default {
   },
 };
 </script>
+
+<style>
+#app {
+  background: url('https://img.wallpapersafari.com/desktop/1920/1080/85/95/hEk5Zj.jpg') no-repeat center center fixed !important;
+  background-size: cover;
+}
+</style>

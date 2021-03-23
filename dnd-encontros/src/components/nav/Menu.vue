@@ -1,47 +1,26 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app dark left>
-    <v-list dense>
-      <v-list-item>
-        <v-list-item-avatar>
+<div>
+  <v-toolbar color="primary" dark>
+    <v-toolbar-title>
           <v-img
             alt="Jepo Logo"
             class="shrink mr-2"
             contain
+            max-height="50px"
             src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/jeporpg-hollow.png"
             transition="scale-transition"
           />
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title>
-            <h2>Gerenciador</h2>
-          </v-list-item-title>
-          <v-list-item-subtitle>de Encontros</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider></v-divider>
-      <v-list-item v-for="item in items" :key="item.title" link @click="$emit('nav', item.area)">
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+    </v-toolbar-title>
+    <v-divider vertical class="mx-4"></v-divider>
+    <span class="subheading">Gerenciador de Encontros</span>
     <v-spacer></v-spacer>
-    <v-footer    
-      absolute
-      class="font-weight-medium"
-    >
-      <v-col
-        class="text-center"
-        cols="12"
-      >
-        {{ new Date().getFullYear() }} — <strong>Jepo</strong>
-      </v-col>
-    </v-footer>
-  </v-navigation-drawer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn v-for="item in items" :key="item.title" @click="$emit('nav',item.area)">
+        {{item.title}}
+      </v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
+  </div>
 </template>
 
 <script>

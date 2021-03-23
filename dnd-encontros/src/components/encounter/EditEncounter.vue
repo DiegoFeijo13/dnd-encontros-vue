@@ -2,9 +2,11 @@
   <div class="text-center">
     <v-dialog v-model="dialog">
       <template v-slot:activator="{ on }">
-        <v-btn color="brown lighten-2" dark v-on="on">Novo Encontro</v-btn>
+        <v-btn icon v-on="on">
+          <v-icon>fa-edit</v-icon>
+        </v-btn>
       </template>
-      <EncounterForm title="Novo Encontro" @confirm="confirm"/>
+      <EncounterForm title="Editar Encontro" :encounter="encounter" @confirm="confirm"/>
       
     </v-dialog>
   </div>
@@ -15,6 +17,12 @@ import EncounterForm from './EncounterForm.vue'
 
 export default {
   components: {EncounterForm},  
+  props:{
+    encounter:{
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       dialog: false,      
@@ -23,7 +31,7 @@ export default {
   methods: {
     confirm(encounter) {      
       this.dialog = false;     
-      this.$store.commit("encounter/add", encounter);      
+      this.$store.commit("encounter/update", encounter);
     }
   }
 };
