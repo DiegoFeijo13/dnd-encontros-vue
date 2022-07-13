@@ -14,6 +14,10 @@ function toFractionString(fraction) {
     return `${Math.floor(numerator)}/${Math.floor(denominator)}`;
 }
 
+function copyArrayDeep(arrayToCopy){
+    return JSON.parse(JSON.stringify(arrayToCopy))
+}
+
 function gcd(a, b) {
     if (b < 0.0000001) return a;
 
@@ -23,5 +27,9 @@ function gcd(a, b) {
 export default {
     numToFractionString(val) {
         return toFractionString(val)
+    },
+    copyArray(val){
+        return copyArrayDeep(val)
     }
+
 }

@@ -1,5 +1,9 @@
 <template>
   <v-card class="my-2" color="background">
+    <v-img
+      height="250"
+      :src="player.imgurl"
+    ></v-img>
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="headline">
@@ -9,9 +13,9 @@
           {{ player.raca }} / {{ player.classe }}
         </v-list-item-subtitle>
       </v-list-item-content>
-      <v-list-item-avatar color="grey">
+      <v-list-item-avatar color="grey" v-if="player.imgurl">
         <img
-          src="https://raw.githubusercontent.com/DiegoFeijo13/jepo-rpg-images/master/lou_devole.jpg"
+          :src="player.imgurl"
         />
       </v-list-item-avatar>
     </v-list-item>
@@ -19,24 +23,29 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-text>
-      <v-list-item>
-        <v-list-item-content class="primary--text">
+      <v-row>
+        <v-col>
           <CardLine
             :title="'Classe de Armadura'"
             :text="player.ca.toString()"
           />
           <CardLine :title="'Pontos de Vida'" :text="player.pv.toString()" />
           <CardLine :title="'Nível'" :text="player.nivel.toString()" />
+        </v-col>
+        <v-col>
           <CardLine :title="'Percepção'" :text="player.percepcao.toString()" />
           <CardLine :title="'Intuição'" :text="player.intuicao.toString()" />
-          <CardLine :title="'Investigação'" :text="player.investigacao.toString()" />
-        </v-list-item-content>
-      </v-list-item>      
+          <CardLine
+            :title="'Investigação'"
+            :text="player.investigacao.toString()"
+          />
+        </v-col>
+      </v-row>
     </v-card-text>
 
     <v-card-actions>
-      <EditPlayerDialog :playerToEdit="player" />
       <v-spacer></v-spacer>
+      <EditPlayerDialog :playerToEdit="player" />
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">

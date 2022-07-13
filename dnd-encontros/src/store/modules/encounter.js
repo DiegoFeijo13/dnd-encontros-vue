@@ -3,6 +3,7 @@ import storage from '../../api/storage'
 const state = () => ({
   all: [],
   lastID: 0,
+  current: {}
 })
 
 // getters
@@ -10,23 +11,32 @@ const getters = {}
 
 // actions
 const actions = {
-  getAll ({ commit }) {
+  getAll({ commit }) {
     storage.getEncounters(encounters => {
       commit('set', encounters)
     })
+  },
+  getForEdit({ commit, id }) {
+    commit('setCurrent', id)
   }
 }
 
 // mutations
 const mutations = {
-  set (state, encounters) {
+  set(state, encounters) {
     state.all = encounters
     state.lastID = Math.max.apply(Math, encounters.map(function (p) { return p.id; }))
     if (isNaN(state.lastID))
       state.lastID = 0
   },
 
-  add(state, encounter){
+  setCurrent(state, id){
+    if(state.all.length > 0){
+      state.current = state.all.find(x => x.id == id)
+    }
+  },
+
+  add(state, encounter) {
     let newEncounter = {
       id: state.lastID,
       monsters: encounter.monsters,

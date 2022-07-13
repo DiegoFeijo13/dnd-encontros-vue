@@ -3,8 +3,8 @@
     <v-card-title>{{encounter.name}}</v-card-title>
     <v-card-subtitle>{{encounter.xp}}xp</v-card-subtitle>
     <v-card-actions>
-     <EditEncounter :encounter="encounter"/>
       <v-spacer></v-spacer>
+     <EditEncounter :encounter="encounter"/>
       <v-dialog v-model="removedialog" width="500">
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">

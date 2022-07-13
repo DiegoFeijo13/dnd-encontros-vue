@@ -1,4 +1,7 @@
 import storage from '../../api/storage'
+
+const defaultAvatar = 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png'
+
 // initial state
 const state = () => ({
   all: [],
@@ -55,6 +58,7 @@ const mutations = {
     pl.percepcao = player.percepcao
     pl.investigacao = player.investigacao
     pl.intuicao = player.intuicao
+    pl.imgurl = player.imgurl ?? defaultAvatar
 
     storage.savePlayers(state.all)
   },

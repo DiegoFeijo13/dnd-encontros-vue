@@ -90,7 +90,7 @@ export default {
   },
   props: {
     encounters: {
-      type: [],
+      type: Array,
       required: true,
     },
     itemsPerPage: {

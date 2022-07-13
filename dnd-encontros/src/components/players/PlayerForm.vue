@@ -109,6 +109,12 @@
           validate-on-blur
           :rules="numberRules"
         ></v-text-field>
+
+        <v-text-field
+        v-model="imgurl"
+        outlined
+        dense
+        label="Imagem (url)"></v-text-field>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -141,6 +147,7 @@ export default {
       percepcao: this.playerToEdit.percepcao,
       investigacao: this.playerToEdit.investigacao,
       intuicao: this.playerToEdit.intuicao,
+      imgurl: this.playerToEdit.imgurl,
       valid: false,
       string20Rules: [
         (v) => !!v || "Obrigatório",
@@ -174,9 +181,9 @@ export default {
         percepcao: this.percepcao,
         investigacao: this.investigacao,
         intuicao: this.intuicao,
+        imgurl: this.imgurl,
       };
       this.$emit("confirm", player);
-      this.$refs.form.reset();
     },
   },
 };

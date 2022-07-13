@@ -90,7 +90,7 @@ export default {
   },
   props: {
     players: {
-      type: [],
+      type: Array,
       required: true,
     },
     itemsPerPage: {

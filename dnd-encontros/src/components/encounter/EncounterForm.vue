@@ -1,13 +1,13 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
-    <v-card>
+    <v-card color="background">
       <v-card-title class="headline primary white--text">{{
         title
       }}</v-card-title>
 
       <v-card-text>
         <v-text-field
-          v-model="encounter.name"
+          v-model="name"
           :counter="50"
           :rules="nameRules"
           label="Nome"
@@ -17,22 +17,36 @@
       </v-card-text>
 
       <v-card-text>
-        <v-row>
-          <v-col cols="4">
-            <EncounterMonsters
-              :monsters="encounter.monsters"
-              :multiplier="multiplier()"
-              :totalXP="totalXP()"
-            />
-          </v-col>
-          <v-col cols="8">
-            <MonstersData
-              :addBtn="true"
-              :itemsPerPage="4"
-              v-on:add="addMonster($event)"
-            />
-          </v-col>
-        </v-row>
+        <EncounterMonsters
+          :monsters="monsters"
+          :multiplier="multiplier"
+          :totalXP="totalXP"
+          v-on:addMons="showAddMonsterDialog = true"
+          v-on:removeMonster="removeMonster($event)"
+        />
+
+        <v-dialog v-model="showAddMonsterDialog">
+          <v-card>
+            <v-card-title class="headline primary white--text">
+              Adicionar Monstros
+            </v-card-title>
+            <v-card-text>
+              <MonstersData
+                :addBtn="true"
+                :itemsPerPage="4"
+                v-on:add="addMonster($event)"
+              />
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                block
+                color="primary"
+                v-on:click="showAddMonsterDialog = false"
+                >Fechar</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-card-text>
 
       <v-card-actions>
@@ -47,8 +61,8 @@
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
 import tables from "../../api/tables.js";
+import util from "../../api/util.js";
 import EncounterMonsters from "./EncounterMonsters.vue";
 import MonstersData from "../monsters/MonstersData.vue";
 
@@ -70,55 +84,69 @@ export default {
       },
     },
   },
-  computed: mapState({
-    players: (state) => state.player.all,
-  }),
-  data: () => ({
-    valid: false,    
-    nameRules: [
-      (v) => !!v || "Informe o Nome",
-      (v) => (v && v.length <= 50) || "Limite de caracteres (50) excedido.",
-    ],
-  }),
-  methods: {
-    multiplier() {
-      let totalMons = 0;
-      if (this.encounter.monsters != null) {
-        this.encounter.monsters.forEach((x) => (totalMons += x.quantidade));
-      }
-
-      return tables.getEncounterMultiplier(totalMons);
-    },
-    totalXP() {
+  data() {
+    return {
+      id: this.encounter.id,
+      name: this.encounter.name,
+      monsters: util.copyArray(this.encounter.monsters),
+      valid: false,
+      nameRules: [
+        (v) => !!v || "Informe o Nome",
+        (v) => (v && v.length <= 50) || "Limite de caracteres (50) excedido.",
+      ],
+      showAddMonsterDialog: false,
+    };
+  },
+  computed: {
+    totalXP: function () {
       let total = 0;
-      if (this.encounter.monsters != null) {
-        this.encounter.monsters.forEach((x) => {
+      if (this.monsters != null) {
+        this.monsters.forEach((x) => {
           total += x.monster.xp * x.quantidade;
         });
       }
 
-      return total * this.multiplier();
+      return total * this.multiplier;
     },
+    multiplier: function () {
+      let totalMons = 0;
+      if (this.monsters != null) {
+        this.monsters.forEach((x) => (totalMons += x.quantidade));
+      }
+
+      return tables.getEncounterMultiplier(totalMons);
+    },
+  },
+  methods: {
+    
     addMonster(url) {
       axios.get(`http://www.dnd5eapi.co${url}`).then((response) => {
         let monster = response.data;
-        if (this.encounter.monsters != null) {
-          let encounterMon = this.encounter.monsters.find(
+        if (this.monsters != null) {
+          let encounterMon = this.monsters.find(
             (x) => x.monster.index == monster.index
           );
           if (encounterMon == null) {
-            this.encounter.monsters.push({ monster: monster, quantidade: 1 });
+            this.monsters.push({ monster: monster, quantidade: 1 });
           } else {
             encounterMon.quantidade += 1;
           }
         }
       });
     },
+    removeMonster(monster) {
+      this.monsters.splice(this.monsters.indexOf(monster), 1);
+    },
     saveEncounter() {
       this.$refs.form.validate();
-      this.encounter.xp = this.totalXP();
-      this.$emit("confirm", this.encounter);
-      this.$refs.form.reset();
+      let encounter = {
+        id: this.id,
+        name: this.name,
+        monsters: this.monsters,
+        xp: this.totalXP(),
+      };
+
+      this.$emit("confirm", encounter);
     },
   },
 };

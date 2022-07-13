@@ -6,7 +6,8 @@ import encounter from './modules/encounter'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV !== 'production'
+//const debug = process.env.NODE_ENV !== 'production'
+const debug = false
 
 export default new Vuex.Store({
   modules: {
